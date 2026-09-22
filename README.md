@@ -1,6 +1,16 @@
-# Scrum Workflow Project
+# Scrum Workflow
 
-Scrum workflow project scaffold for local development. This scarfold is adopted for Python Django projects, you should be able to ask the agents to build out your prefered stack and update the AGENTS.md file to follow your prefered tech stack.
+Scrum Workflow is an open-source delivery framework for turning product ideas into clear, reviewable work. It combines a disciplined scrum workflow with a structured team model, task lifecycle, and quality gates so teams can move from concept to shipped work with less drift and more accountability.
+
+This repository serves as the project foundation and working example for a product-driven engineering workflow. The structure is designed to help teams define requirements, implement work through tracked tasks, validate user experience, and review technical quality before release.
+
+## What this project includes
+
+- A product-owner workflow for turning rough requests into groomed tickets
+- A developer workflow for implementation, validation, and task tracking
+- A UX review model focused on accessibility, responsiveness, and user experience
+- A tech-lead review model focused on architecture, quality, and release risk
+- A clear lifecycle from ticket creation through review and completion
 
 ## Repository Instructions
 
@@ -114,7 +124,9 @@ Validate implemented UI:
 
 ## Setup
 
-This project targets Python 3.9 or newer within the supported Django 4.2 range.
+This repository currently includes the project marketing landing page and the workflow framework documentation. It is designed to be extended into a Django-based implementation later, but the core project intent is already documented in the repository structure and task flow.
+
+For a Python/Django setup, this project targets Python 3.9 or newer within the supported Django 4.2 range.
 
 ```bash
 python3 -m venv .venv
