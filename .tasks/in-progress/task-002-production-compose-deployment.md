@@ -25,6 +25,7 @@ The repository currently contains a static landing page but no container or depl
 ## Functional Requirements
 
 - The Compose service must build from this repository and serve the landing page on the container’s HTTP port.
+- For local access, Compose must publish host port `8001` to container port `8080` using `8001:8080`; Nginx and its health check must continue to use container port `8080`.
 - The repository must include a documented Dockerfile/build target using a pinned production-grade static web-server image.
 - The container must run as a non-root user where supported by the selected image and must not require application secrets.
 - The service must be attached to the external `proxy-tier` network without creating or managing the proxy itself.
@@ -41,6 +42,7 @@ The repository currently contains a static landing page but no container or depl
 - [x] A clean deployment from the repository passes `docker compose build` and starts the web service.
 - [x] The running service returns a successful HTTP response for `/` and serves the landing page content.
 - [x] `styles.css` and every asset referenced by the page load successfully from the deployed service.
+- [x] The local Compose port mapping is `8001:8080`, and the landing page, stylesheet, and `/healthz` endpoint respond successfully through `http://localhost:8001` when tested without the external proxy network.
 - [x] The service is connected to the externally managed `proxy-tier` network and does not attempt to create it.
 - [ ] The deployment documentation identifies the existing reverse-proxy mechanism and explains the route for `ai-scrum-workflow.shikomba.me`, including the internal service name, port, network alias, and labels or equivalent configuration.
 - [ ] DNS and TLS prerequisites are documented, including which components remain outside this repository.
@@ -70,6 +72,7 @@ The repository currently contains a static landing page but no container or depl
 ## Deployment Assumptions and Validation Boundaries
 
 - Local repository checks cover Compose syntax, image build, container startup, HTTP response, and referenced asset availability.
+- Local testing may bypass the external `proxy-tier` network with `docker run --publish 8001:8080`; this does not replace production network validation.
 - Production-host checks cover the existence of the external `proxy-tier` network, reverse-proxy routing, DNS resolution, TLS certificate issuance, and the final public hostname.
 - The implementer must document any unavailable production-host prerequisite as a deployment blocker rather than weakening the local acceptance criteria.
 
@@ -82,6 +85,10 @@ The repository currently contains a static landing page but no container or depl
 ## Next Step
 
 Implementation is complete locally. Production-host routing, DNS, TLS, responsive browser validation, and restart behavior remain to be verified before moving the ticket to `.tasks/done/`.
+
+## Developer Handoff
+
+`@developer`: update the branch with the latest `8001:8080` Compose mapping, verify the Dockerfile and Nginx listener remain aligned on container port `8080`, run the network-independent Docker smoke test, commit and push the changes, then recreate or update PR #2 into `main`. Include the latest validation results in the PR description.
 
 ---
 
