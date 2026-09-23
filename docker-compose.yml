@@ -1,0 +1,18 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-scrum-workflow-web
+    restart: unless-stopped
+    expose:
+      - "8080"
+    networks:
+      proxy-tier:
+        aliases:
+          - ai-scrum-workflow-web
+
+networks:
+  proxy-tier:
+    name: proxy-tier
+    external: true
