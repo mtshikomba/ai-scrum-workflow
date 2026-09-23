@@ -138,3 +138,19 @@ python manage.py migrate
 ```
 
 The settings module reads environment variables from the shell. Load `.env` with your preferred environment manager when needed; Django does not read `.env` files automatically.
+
+## Production Static Deployment
+
+The landing page can be deployed with Docker Compose from the repository root:
+
+```bash
+docker compose config
+docker compose build
+docker compose up -d
+docker compose exec web wget --quiet --output-document=/dev/null http://127.0.0.1:8080/
+docker compose exec web wget --quiet --output-document=/dev/null http://127.0.0.1:8080/styles.css
+```
+
+The `web` service uses the pinned `nginxinc/nginx-unprivileged:1.27.5-alpine` image, listens on container port `8080`, and is attached to the externally managed Docker network named `proxy-tier`. It does not publish a host port; the existing reverse proxy must route `ai-scrum-workflow.shikomba.me` to the service DNS name `ai-scrum-workflow-web` on port `8080` over that network. Any proxy labels or equivalent routing configuration must follow the production host's existing convention and remain managed outside this repository.
+
+Before public release, create a DNS record for `ai-scrum-workflow.shikomba.me`, ensure the production host has already created `proxy-tier`, configure TLS termination in the external reverse proxy, and verify the hostname at desktop and mobile widths. DNS, TLS, and proxy configuration are not provisioned by this repository.
