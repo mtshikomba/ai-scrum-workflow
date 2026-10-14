@@ -1,5 +1,5 @@
 services:
-  web:
+  ai-scrum-workflow-web:
     build:
       context: .
       dockerfile: Dockerfile
